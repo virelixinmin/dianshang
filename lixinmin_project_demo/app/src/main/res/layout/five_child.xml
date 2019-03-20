@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="我的资料"
+        android:padding="5dp"
+        android:layout_gravity="center"
+        />
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:background="@drawable/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/chile_my_person_image_up"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="我的头像"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:src="@mipmap/mypage"
+                android:layout_alignParentRight="true"
+                fresco:roundAsCircle="true"
+                android:id="@+id/chile_my_person_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d3d3d3"
+                android:layout_below="@id/chile_my_person_image"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chile_my_person_name_update"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="我的昵称"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/chile_my_person_name"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:text="我是狂吃不胖的小姐姐"
+                />
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d3d3d3"
+                android:layout_below="@id/chile_my_person_name"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chile_my_person_password_update"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="我的密码"
+                android:textSize="20dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/chile_my_person_password"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:text="12345678901"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d3d3d3"
+                android:layout_below="@id/chile_my_person_password"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

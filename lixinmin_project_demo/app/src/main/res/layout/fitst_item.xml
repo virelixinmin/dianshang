@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/refresh">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:orientation="horizontal"
+
+        android:background="#fff">
+        <ImageButton
+            android:layout_centerVertical="true"
+            android:id="@+id/neirong"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:background="@mipmap/neirong"
+            android:cropToPadding="true"
+            android:layout_marginLeft="20dp"/>
+        <com.bw.project_demo.ui.fragment.widght.HorizontalExpandMenu
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toRightOf="@+id/neirong"
+            android:id="@+id/huoqu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            app:back_color="#fff"
+            >
+        <Button
+            android:layout_centerVertical="true"
+            android:background="#fff"
+
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_24"
+            android:id="@+id/edit"
+            android:paddingLeft="@dimen/dp_10"
+            android:hint="请输入搜索内容"/>
+        </com.bw.project_demo.ui.fragment.widght.HorizontalExpandMenu>
+
+        <!--<ImageButton-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:id="@+id/huoqu"-->
+            <!--android:layout_width="@dimen/dp_24"-->
+            <!--android:layout_height="@dimen/dp_24"-->
+            <!--android:background="@mipmap/sousuo"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="24dp"/>-->
+
+    </RelativeLayout>
+
+
+
+
+
+            <com.stx.xhb.xbanner.XBanner
+                android:layout_marginTop="@dimen/dp_10"
+                android:id="@+id/mBanner"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_164"
+                android:clipChildren="true"
+                app:isAutoPlay="true"
+                app:isClipChildrenMode="true"
+                app:isClipChildrenModeLessThree="true"
+                app:pageChangeDuration="800"
+                app:clipChildrenLeftRightMargin="@dimen/dp_50"></com.stx.xhb.xbanner.XBanner>
+
+
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:background="@drawable/hotxiao"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="9dp"
+            android:text="热销精品"
+            android:textColor="#f00"
+            android:background="@mipmap/bitmap"
+            android:gravity="center"/>
+    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_190"
+                >
+    <android.support.v7.widget.RecyclerView
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/hotShop"
+        android:background="#fff"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+    <!--<com.zhouwei.mzbanner.MZBannerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp_140"-->
+        <!--android:id="@+id/ban"-->
+        <!--app:open_mz_mode="true"-->
+        <!--app:canLoop="true"-->
+        <!--app:indicatorAlign="center"></com.zhouwei.mzbanner.MZBannerView>-->
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/hotxiao"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="9dp"
+                android:text="魔力时尚"
+                android:textColor="#f00"
+                android:background="@mipmap/fashion"
+                android:gravity="center"/>
+        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_260"
+                android:id="@+id/FashionShop"
+                android:background="#fff"
+                ></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:background="@drawable/hotxiao"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="9dp"
+                    android:text="品质生活"
+                    android:textColor="#f00"
+                    android:background="@mipmap/pinzhi"
+                    android:gravity="center"/>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_400"
+                android:id="@+id/pinzhiShop"
+                android:background="#fff"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

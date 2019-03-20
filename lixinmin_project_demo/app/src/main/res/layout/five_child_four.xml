@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    tools:context=".ui.fragment.wode.HubActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/my_wallet_image"
+        android:layout_width="480dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/my_wellet_image">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:background="@null"
+            android:text="余额"
+            android:textColor="#000"
+            android:textSize="30dp" />
+        <TextView
+            android:id="@+id/my_wallet_price"
+            android:text="100.00"
+            android:background="@null"
+
+            android:textSize="48dp"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="80dp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/my_wallet_title"
+        android:layout_marginTop="-20dp"
+        android:layout_below="@id/my_wallet_image"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="65dp">
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="消费金额"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <TextView
+            android:text="|"
+            android:textSize="30dp"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="消费时间"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/my_wallet_view"
+        android:layout_below="@id/my_wallet_title"
+        android:background="#c3c3c3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_below="@id/my_wallet_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_wallet_ryl"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</RelativeLayout>

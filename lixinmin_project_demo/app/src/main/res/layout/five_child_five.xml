@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <android.support.v4.widget.Space
+            android:layout_marginLeft="50dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="我的收货地址"
+            android:padding="5dp"
+            />
+        <android.support.v4.widget.Space
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/my_child_address_complet"
+            android:text="完成"
+            android:layout_marginRight="20dp"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_child_address_ryl"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/my_child_address_addaddress"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="#fa6f92"
+            android:gravity="center"
+            android:text="新增收获地址"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+</LinearLayout>

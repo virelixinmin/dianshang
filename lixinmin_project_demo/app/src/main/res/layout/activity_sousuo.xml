@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.SousuoActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:orientation="horizontal"
+
+        android:background="#fff">
+        <ImageButton
+            android:layout_centerVertical="true"
+            android:id="@+id/neirong"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:background="@mipmap/speak"
+            android:cropToPadding="true"
+            android:layout_marginLeft="20dp"/>
+        <!--<com.bw.project_demo.ui.fragment.widght.HorizontalExpandMenu-->
+            <!--android:layout_marginTop="@dimen/dp_3"-->
+            <!--android:layout_marginBottom="@dimen/dp_3"-->
+            <!--android:layout_marginLeft="@dimen/dp_10"-->
+            <!--android:layout_marginRight="@dimen/dp_10"-->
+            <!--android:layout_toRightOf="@+id/neirong"-->
+            <!--android:id="@+id/huoqu"-->
+            <!--android:layout_height="@dimen/dp_40"-->
+            <!--app:back_color="#bbffee">-->
+        <!--</com.bw.project_demo.ui.fragment.widght.HorizontalExpandMenu>-->
+            <EditText
+                android:layout_centerVertical="true"
+                android:background="@drawable/btnss"
+                android:layout_marginLeft="@dimen/dp_56"
+                android:layout_marginRight="@dimen/dp_56"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_24"
+                android:id="@+id/edit"
+                android:paddingLeft="@dimen/dp_10"
+                android:hint="请输入搜索内容"/>
+
+
+        <ImageButton
+        android:layout_centerVertical="true"
+        android:id="@+id/huoqu"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:background="@mipmap/sousuo"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp" />
+
+    </RelativeLayout>
+    <com.zhy.view.flowlayout.TagFlowLayout
+        app:max_select="-1"
+        android:padding="@dimen/dp_20"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab">
+    </com.zhy.view.flowlayout.TagFlowLayout>
+
+</LinearLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_97"
+    android:layout_marginTop="@dimen/dp_20"
+    android:orientation="horizontal"
+
+    >
+    <LinearLayout
+
+        android:background="@drawable/shou_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_97"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+        <CheckBox
+            android:layout_marginLeft="@dimen/dp_7"
+            android:layout_marginTop="@dimen/dp_2"
+            android:id="@+id/cb_goods"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30" />
+        </RelativeLayout>
+        <ImageView
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="match_parent"
+            android:id="@+id/img_shopping"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_name"
+                android:maxEms="18"
+                android:singleLine="true"
+                android:ellipsize="end"
+
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_35">
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_price"
+                android:textColor="#f00"/>
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/jian"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:background="@drawable/jian"/>
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:gravity="center"
+                        android:text="1"/>
+                    <ImageButton
+                        android:id="@+id/jia"
+                        android:layout_width="@dimen/dp_20"
+                        android:layout_height="@dimen/dp_20"
+                        android:background="@drawable/jia"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_hidden"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="#ff0000"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/tv_item_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+</LinearLayout>

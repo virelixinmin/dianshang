@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.RegisterActivity"
+    android:orientation="vertical"
+    android:background="@mipmap/login_backbackground">
+    <EditText
+        android:id="@+id/edit_register_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="30dp"
+        android:drawableLeft="@mipmap/register_icon_phone_n_hdpi"
+        android:hint="手机号"
+        android:drawableBottom="@drawable/line"
+        android:textColorHint="#fff"
+        android:drawablePadding="20dp"
+        android:paddingBottom="10dp"
+        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <EditText
+                android:id="@+id/verification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:drawableLeft="@mipmap/verfication_n_hdhpi"
+                android:hint="验证码"
+                android:drawableBottom="@drawable/line"
+                android:textColorHint="#fff"
+                android:drawablePadding="20dp"
+                android:paddingBottom="10dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:id="@+id/huoqu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="38dp"
+                android:layout_marginRight="38dp"
+                android:text="获取验证码"
+                android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+
+            android:id="@+id/edit_Register_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="30dp"
+
+            android:drawableLeft="@mipmap/register_icon_lock_n_hdpi"
+            android:drawableBottom="@drawable/line"
+            android:drawablePadding="20dp"
+            android:hint="登录密码"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:textColorHint="#fff"
+            android:password="true"/>
+
+        <ToggleButton
+            android:id="@+id/togglebtn"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="23dp"
+            android:textOff=""
+            android:textOn=""
+            android:layout_marginRight="38dp"
+            android:background="@mipmap/login_icon_eye_n_hdhpi" />
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp">
+
+
+
+        <TextView
+            android:id="@+id/queck_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="已有账号?立即登录"
+            android:textColor="#fff"
+            />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <Button
+            android:id="@+id/Register_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="120dp"
+            android:background="@drawable/btn"
+            android:text="注册" />
+    </RelativeLayout>
+</LinearLayout>
