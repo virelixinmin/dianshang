@@ -1,5 +1,7 @@
 package com.bw.project_demo.ui.fragment.xiangqing.DetailsBeans;
 
+import java.io.Serializable;
+
 public class beans {
 
     /**
@@ -36,7 +38,7 @@ public class beans {
         this.status = status;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * categoryId : 1001007004
          * categoryName : 彩妆

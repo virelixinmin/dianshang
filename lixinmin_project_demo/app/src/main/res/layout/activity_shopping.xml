@@ -10,61 +10,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_marginTop="@dimen/dp_30"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_marginTop="@dimen/dp_20"
-            android:gravity="center"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/shouhuo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="李小二"
-                android:textSize="@dimen/dp_18"
-                android:id="@+id/data_name"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15011445417"
-                android:layout_marginLeft="@dimen/dp_180"
-                android:id="@+id/data_phone"/>
-        </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/data_address"
-                    android:layout_marginLeft="@dimen/dp_20"/>
-            </LinearLayout>
+            android:layout_gravity="center"
+            android:text="请选择收货地址"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/dp_10"/>
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp_130"
 
-        </LinearLayout>
+          android:layout_marginRight="@dimen/dp_20"
+          android:id="@+id/rcy_addres"
+          android:visibility="gone"
+          ></android.support.v7.widget.RecyclerView>
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="@dimen/dp_30"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/data_rcy"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#fff">
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/all_price"
+            android:textSize="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总价格:"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp_30"/>
         <Button
-            android:layout_marginLeft="@dimen/dp_270"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="提交订单"
             android:background="#f00"
             android:textColor="#fff"
             android:id="@+id/dingdan_btn"/>
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.bw.project_demo.ui.fragment.dingdan.fragment.receiving;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.All_ordersbean;
-import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.ServiceApp;
+import com.bw.project_demo.data.contractPath.ServiceApp;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.HashMap;
@@ -33,7 +36,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+//待收货
 public class receiving extends Fragment {
     @BindView(R.id.receiving_rcy)
     RecyclerView receivingRcy;
@@ -53,11 +56,6 @@ public class receiving extends Fragment {
         SharedPreferences data = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         userId = data.getInt("userId", 5);
         sessionId = data.getString("sessionId", "15011445417");
-        Retrofit build = new Retrofit.Builder().baseUrl("http://mobile.bwstudent.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
         HashMap<String, String> map = new HashMap<>();
         map.put("userId", userId + "");
         map.put("sessionId", sessionId);
@@ -65,9 +63,9 @@ public class receiving extends Fragment {
         map2.put("status", 2 + "");
         map2.put("page", 1 + "");
         map2.put("count", 5 + "");
-        ServiceApp serviceApp = build.create(ServiceApp.class);
-        Observable<All_ordersbean> getorders = serviceApp.getorders(map, map2);
-        getorders.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getorders(map,map2)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<All_ordersbean>() {
                     @Override
@@ -85,17 +83,15 @@ public class receiving extends Fragment {
                                     @Override
                                     public void onClick(View v) {
                                         String orderId = orderList.get(position).getOrderId();
-                                        Retrofit build = new Retrofit.Builder().baseUrl("http://mobile.bwstudent.com/")
-                                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                                .addConverterFactory(GsonConverterFactory.create())
-                                                .build();
+
 
                                         HashMap<String, String> map = new HashMap<>();
                                         map.put("userId", userId + "");
                                         map.put("sessionId", sessionId);
-                                        ServiceApp serviceApp1 = build.create(ServiceApp.class);
-                                        Observable<ResponseBody> receiving = serviceApp1.getReceiving(map, orderId);
-                                        receiving.subscribeOn(Schedulers.io())
+
+                                        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                                                .getReceiving(map,orderId)
+                                                .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(new Consumer<ResponseBody>() {
                                                     @Override

@@ -21,6 +21,7 @@ public class MyFootAdapter extends BaseQuickAdapter<FootBean.ResultBean,BaseView
     protected void convert(BaseViewHolder helper, FootBean.ResultBean item) {
         helper.setText(R.id.tv_title,item.getCommodityName());
         helper.setText(R.id.tv_price,"$"+item.getPrice());
+
         Glide.with(mContext).load(item.getMasterPic()).into((ImageView) helper.getView(R.id.foot_img));
     }
 }

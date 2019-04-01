@@ -146,17 +146,21 @@ public class MainActivity extends AppCompatActivity implements LoginContractAll.
 //            Toast.makeText(this, "userId:" + userId, Toast.LENGTH_SHORT).show();
 
             if (message.equals("登录成功")){
+                int userId = loginBean.getResult().getUserId();
+                String sessionId = loginBean.getResult().getSessionId();
+                edit.putInt("userId",userId);
+                edit.putString("sessionId",sessionId);
+                edit.commit();
                 startActivity(new Intent(MainActivity.this,HomeActivity.class));
 
                 finish();
             }else{
                 Toast.makeText(this, "账号或密码错误", Toast.LENGTH_SHORT).show();
+                edit.putBoolean("zidong",false);
+                edit.commit();
+
             }
-        int userId = loginBean.getResult().getUserId();
-        String sessionId = loginBean.getResult().getSessionId();
-        edit.putInt("userId",userId);
-        edit.putString("sessionId",sessionId);
-        edit.commit();
+
 
 
 

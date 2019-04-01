@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.bw.project_demo.data.beans.RegisterBean;
 import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.di.Contract.ContractAll;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -17,33 +20,26 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+
 public class ContractModelImpl implements ContractAll.ContractModel {
-
-
-
-
-
-
     @Override
     public void responseData(String registerphone, String registerpwd, final CallBack callBack) {
-        String urlString =CheckPath.urlRegister+"?phone="+registerphone+"&&pwd="+registerpwd;
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class).getRegister(registerphone,registerpwd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(ResponseBody responseBody) throws Exception {
+                        String s = responseBody.string().toString();
+                        JSONObject jsonObject = new JSONObject(s);
+                        Object messgae = jsonObject.get("message");
+                        callBack.getData(messgae);
 
-        OkGo.<String>post(urlString).execute(new StringCallback() {
-            @Override
-            public void onSuccess(Response<String> response) {
-
-                try {
-                    String s = response.body().toString();
-                    JSONObject jsonObject = new JSONObject(s);
-                    Object message = jsonObject.get("message");
-                    Log.d("ContractModelImpl", "message:" + message);
-                    callBack.getData(message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });
+                    }
+                });
     }
 }

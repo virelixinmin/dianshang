@@ -19,10 +19,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+//首页时尚生活的适配器
 public class MyFashionAdapter extends RecyclerView.Adapter<MyFashionAdapter.ViewHolder> {
     FragmentActivity context;
     List<ShopBeans.ResultBean.MlssBean.CommodityListBeanXX> fashion;
     OnfashionImgClickListen onfashionImgClickListen;
+    //时尚生活的接口回调
     public interface OnfashionImgClickListen{
         public void OnClick(int commodityId);
     }
@@ -34,7 +36,7 @@ public class MyFashionAdapter extends RecyclerView.Adapter<MyFashionAdapter.View
         this.fashion=fashion;
 
     }
-
+    //绑定布局和viewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,7 +44,7 @@ public class MyFashionAdapter extends RecyclerView.Adapter<MyFashionAdapter.View
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
-
+    //给控件赋值
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         RoundedCorners roundedCorners = new RoundedCorners(20);
@@ -50,6 +52,7 @@ public class MyFashionAdapter extends RecyclerView.Adapter<MyFashionAdapter.View
         Glide.with(context).load(fashion.get(position).getMasterPic()).apply(override).into(holder.img);
        holder.tvPrice.setText("$"+fashion.get(position).getPrice());
        holder.tvTitle.setText(fashion.get(position).getCommodityName());
+       //给文件设置接口回调 ui界面将 得到的id回传
        holder.img.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

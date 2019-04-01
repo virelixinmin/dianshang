@@ -3,10 +3,11 @@ package com.bw.project_demo.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.EventLog;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
@@ -20,10 +21,10 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
-import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,18 +45,37 @@ public class SousuoActivity extends AppCompatActivity {
     @BindView(R.id.huoqu)
     ImageButton huoqu;
     @BindView(R.id.tab)
-    TagFlowLayout tab;
+    FlowLayoutView tab;
+    @BindView(R.id.clearData)
+    Button clearData;
 
 
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
     private static final String TAG = SousuoActivity.class.getSimpleName();
+    private List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sousuo);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+        initData();
+        list.add("饿了么");
+        list.add("美团外卖炸鸡送");
+        list.add("初闻不知曲中意,再遇已是曲中人");
+        tab.addData(list);
 
+
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5c89a984");
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void getEvent(String event){
+
+    }
+
+    private void initData() {
 
         huoqu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,45 +83,16 @@ public class SousuoActivity extends AppCompatActivity {
                 if (edit.getText().toString().equals("")) {
                     Toast.makeText(SousuoActivity.this, "搜索框不能为空", Toast.LENGTH_SHORT).show();
                 } else {
+                    list.add(edit.getText().toString());
                     Intent in = new Intent(SousuoActivity.this, SearchActivity.class);
                     in.putExtra("search_name", edit.getText().toString());
                     startActivity(in);
+
                 }
 
             }
         });
-        final List<String> list = new ArrayList<>();
-        list.add("鞋子");
-        list.add("女装");
-        list.add("男装");
-        list.add("T恤衫");
-        list.add("dasdasdsadas");
-        list.add("android");
-        list.add("css");
-        list.add("祝我升班");
-        list.add("叶志成末班");
 
-        tab.setAdapter(new TagAdapter<String>(list){
-
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                TextView inflate = (TextView) View.inflate(SousuoActivity.this, R.layout.tv, null);
-                inflate.setText(s);
-
-                return inflate;
-            }
-        });
-
-        tab.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                Intent in = new Intent(SousuoActivity.this, SearchActivity.class);
-                in.putExtra("search_name", list.get(position).toString());
-                startActivity(in);
-
-                return true;
-            }
-        });
         neirong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,9 +100,25 @@ public class SousuoActivity extends AppCompatActivity {
             }
         });
 
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5c89a984");
+        tab.setFlowLayoutListener(new FlowLayoutView.FlowLayoutListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent in = new Intent(SousuoActivity.this, SearchActivity.class);
+                in.putExtra("search_name", list.get(position).toString());
+                startActivity(in);
+            }
+        });
+        clearData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SousuoActivity.this, "点击了", Toast.LENGTH_SHORT).show();
+                list.clear();
 
+            }
+        });
     }
+
+
 
     private void startSpeechDialog() {
 
@@ -234,5 +241,11 @@ public class SousuoActivity extends AppCompatActivity {
 
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

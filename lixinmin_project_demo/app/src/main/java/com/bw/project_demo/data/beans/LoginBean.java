@@ -1,7 +1,6 @@
 package com.bw.project_demo.data.beans;
-
+//登录的bean类
 public class LoginBean {
-
         /**
          * result : {"headPic":"http://172.17.8.100/images/small/default/user.jpg","nickName":"Pz_mTWic","phone":"15103204975","sessionId":"154365223731333","sex":1,"userId":33}
          * message : 登录成功

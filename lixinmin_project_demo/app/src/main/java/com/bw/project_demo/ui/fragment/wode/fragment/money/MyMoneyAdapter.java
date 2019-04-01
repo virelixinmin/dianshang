@@ -3,6 +3,7 @@ package com.bw.project_demo.ui.fragment.wode.fragment.money;
 import android.support.annotation.Nullable;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.utils.TimeUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.money.MoneyBean.MoneyBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -17,6 +18,11 @@ public class MyMoneyAdapter extends BaseQuickAdapter<MoneyBean.ResultBean.Detail
     @Override
     protected void convert(BaseViewHolder helper, MoneyBean.ResultBean.DetailListBean item) {
         helper.setText(R.id.money,item.getAmount()+"");
-        helper.setText(R.id.time,item.getConsumerTime()+"");
+        long consumerTime = item.getConsumerTime();
+        String s = TimeUtils.longToDate(consumerTime);
+        helper.setText(R.id.time,s);
+
+
+
     }
 }

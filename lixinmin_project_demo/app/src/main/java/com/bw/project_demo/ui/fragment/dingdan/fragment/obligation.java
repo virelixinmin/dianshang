@@ -13,15 +13,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.All_ordersbean;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.My_Alls_Adapter;
-import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.ServiceApp;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.payment.PayMentActivity;
-import com.bw.project_demo.ui.fragment.dingdan.fragment.payment.paybean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,20 +36,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
+//待付款
 public class obligation extends Fragment {
     @BindView(R.id.obli_rcy)
     RecyclerView obliRcy;
     Unbinder unbinder;
+    @BindView(R.id.fresh)
+    SmartRefreshLayout fresh;
     private String ord;
+    private HashMap<String, String> map;
+    private HashMap<String, String> map2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,94 +64,68 @@ public class obligation extends Fragment {
         SharedPreferences data = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         final int userId = data.getInt("userId", 5);
         final String sessionId = data.getString("sessionId", "15011445417");
-        Retrofit build = new Retrofit.Builder().baseUrl("http://mobile.bwstudent.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        HashMap<String, String> map = new HashMap<>();
+        fresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                InterNet();
+            }
+        });
+        fresh.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+            }
+        });
+        //设置 Header 为 贝塞尔雷达 样式
+        fresh.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
+        //设置 Footer 为 球脉冲 样式
+        fresh.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
+        map = new HashMap<>();
         map.put("userId", userId + "");
         map.put("sessionId", sessionId);
-        HashMap<String, String> map2 = new HashMap<>();
+        map2 = new HashMap<>();
         map2.put("status", 1 + "");
         map2.put("page", 1 + "");
         map2.put("count", 5 + "");
-        ServiceApp serviceApp = build.create(ServiceApp.class);
-        Observable<All_ordersbean> getorders = serviceApp.getorders(map, map2);
-        getorders.subscribeOn(Schedulers.io())
+        InterNet();
+
+        return inflate;
+    }
+
+    private void InterNet() {
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString, ServiceApp.class)
+                .getorders(map, map2)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<All_ordersbean>() {
                     @Override
-                    public void accept(All_ordersbean all_ordersbean) throws Exception {
+                    public void accept(final All_ordersbean all_ordersbean) throws Exception {
                         List<All_ordersbean.OrderListBean> orderList = all_ordersbean.getOrderList();
-                        My_Alls_Adapter adapter = new My_Alls_Adapter(R.layout.my_alls, orderList);
+                        My_Alls_Adapter adapter = new My_Alls_Adapter(R.layout.fukuan_layout, orderList);
                         obliRcy.setLayoutManager(new LinearLayoutManager(getActivity()));
                         obliRcy.setAdapter(adapter);
-                        adapter.setOnAllCallBack(new My_Alls_Adapter.AllsCallBack() {
-                            @Override
-                            public void getData(String orderId) {
 
-                                ord = orderId;
-                            }
-                        });
 
-                        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                            @Override
-                            public void onItemChildClick(final BaseQuickAdapter adapter, View view, int position) {
-                                Button cancel = view.findViewById(R.id.order_PendingPayment_cancel);
-                                cancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Retrofit build1 = new Retrofit.Builder()
-                                                .baseUrl("http://mobile.bwstudent.com/")
-                                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                                .build();
-                                        ServiceApp serviceApp1 = build1.create(ServiceApp.class);
-                                        HashMap<String, String> map = new HashMap<>();
-                                        map.put("userId", userId + "");
-                                        map.put("sessionId", sessionId);
-                                        Observable<ResponseBody> delete = serviceApp1.getDelete(map, ord);
-                                        delete.subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<ResponseBody>() {
-                                                    @Override
-                                                    public void accept(ResponseBody responseBody) throws Exception {
-                                                        Toast.makeText(getActivity(), responseBody.string(), Toast.LENGTH_SHORT).show();
-
-                                                    }
-                                                }, new Consumer<Throwable>() {
-                                                    @Override
-                                                    public void accept(Throwable throwable) throws Exception {
-
-                                                    }
-                                                });
-                                    }
-                                });
-                            }
-                        });
+                        //支付
                         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                             @Override
                             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                                 Button payment = view.findViewById(R.id.order_PendingPayment_payment);
+                                final String orderId = all_ordersbean.getOrderList().get(position).getOrderId();
                                 payment.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent in = new Intent(getActivity(),PayMentActivity.class);
-                                        in.putExtra("ord",ord);
+                                        Intent in = new Intent(getActivity(), PayMentActivity.class);
+                                        in.putExtra("ord", orderId);
                                         startActivity(in);
                                     }
                                 });
                             }
                         });
                     }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-
-                        }
-
                 });
-        return inflate;
     }
 
     @Override

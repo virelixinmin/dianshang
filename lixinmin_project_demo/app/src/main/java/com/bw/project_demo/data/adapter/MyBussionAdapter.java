@@ -18,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
-
+    //这是商品的适配器
     public class MyBussionAdapter extends BaseQuickAdapter<FindShoppingBean.ResultBean,BaseViewHolder> {
 
 
@@ -34,6 +34,7 @@ import java.util.List;
 //
     BussionCallBack bussionCallBack;
     private TextView num;
+    //接口回调方法
     public interface BussionCallBack{
         public void onCallBack();
     }
@@ -43,7 +44,7 @@ import java.util.List;
     public MyBussionAdapter(int layoutResId, @Nullable List<FindShoppingBean.ResultBean> data) {
             super(layoutResId, data);
     }
-
+    //给数据的配置值
     @Override
     protected void convert(BaseViewHolder helper, final FindShoppingBean.ResultBean item) {
        helper.setText(R.id.tv_num,item.getCount()+"");
@@ -56,7 +57,7 @@ import java.util.List;
         cb_goods.setChecked(item.getChecked());
 
         final int position = helper.getPosition();
-
+    //点击商品选中的状态
         cb_goods.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -68,6 +69,7 @@ import java.util.List;
       });
 
         num = helper.getView(R.id.tv_num);
+        //获取加减器的id
         ImageButton img_jia = helper.getView(R.id.jia);
         ImageButton img_jian = helper.getView(R.id.jian);
         img_jia.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +83,7 @@ import java.util.List;
 
             }
         });
+        //给点击事件
         img_jian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

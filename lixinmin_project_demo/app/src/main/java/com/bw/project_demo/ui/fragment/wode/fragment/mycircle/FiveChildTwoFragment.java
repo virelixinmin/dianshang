@@ -19,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
-import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.ServiceApp.MyServiceApp;
+
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.adapter.MyCircleAdapter;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.beans.circlebean;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.circleConstance.CircleConstance;
@@ -129,11 +132,7 @@ public class FiveChildTwoFragment extends Fragment implements CircleConstance.Ci
                     @Override
                     public void onClick(View v) {
                         if (checkBox.isChecked()) {
-                            Retrofit build = new Retrofit.Builder()
-                                    .baseUrl("http://mobile.bwstudent.com/")
-                                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                    .build();
-                            MyServiceApp myServiceApp = build.create(MyServiceApp.class);
+
                             HashMap<String, String> map = new HashMap<>();
                             map.put("userId", userId + "");
                             map.put("sessionId", sessionId);
@@ -142,8 +141,9 @@ public class FiveChildTwoFragment extends Fragment implements CircleConstance.Ci
                             String s = stringBuffer.toString();
                             String substring = s.substring(0, s.length() - 1);
                             int i = Integer.parseInt(substring);
-                            Observable<ResponseBody> responseBodydele = myServiceApp.getResponseBodydele(map, i);
-                            responseBodydele.subscribeOn(Schedulers.io())
+                            RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                                    .getResponseBodydele(map,i)
+                                    .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Consumer<ResponseBody>() {
                                         @Override

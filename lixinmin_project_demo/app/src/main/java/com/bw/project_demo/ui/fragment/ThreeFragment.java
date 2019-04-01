@@ -1,6 +1,7 @@
 package com.bw.project_demo.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,25 +22,15 @@ import com.bw.project_demo.data.adapter.MyBussionAdapter;
 import com.bw.project_demo.data.beans.FindShoppingBean;
 import com.bw.project_demo.di.Contract.ShoppingContract;
 import com.bw.project_demo.di.presenter.ShoppingPresenterImpl;
-import com.bw.project_demo.ui.fragment.gouwuche.ShoppingContent.ShoppingCon;
-import com.bw.project_demo.ui.fragment.gouwuche.widght.MyShoppingServiceApp;
-import com.bw.project_demo.ui.fragment.xiangqing.Details.DetailsActivity;
-import com.bw.project_demo.ui.fragment.xiangqing.DetailsBeans.beans;
+import com.bw.project_demo.ui.fragment.gouwuche.ShoppingActivity;
 
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class ThreeFragment extends Fragment implements ShoppingContract.ShoppingView {
 
@@ -58,8 +49,9 @@ public class ThreeFragment extends Fragment implements ShoppingContract.Shopping
     private SharedPreferences sp;
     private List<FindShoppingBean.ResultBean> data;
     private int[] startLocation;
+    private MyBussionAdapter adapter;
 
-
+    List<FindShoppingBean.ResultBean> list = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +69,19 @@ public class ThreeFragment extends Fragment implements ShoppingContract.Shopping
         jiesuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (int i = 0; i <data.size() ; i++) {
+                    if (data.get(i).getChecked()){
+                        list.add(new FindShoppingBean.ResultBean(data.get(i).getCommodityId(),data.get(i).getCommodityName(),
+                                data.get(i).getCount(),data.get(i).getPic(),data.get(i).getPrice(),true));
+
+                    }
+                }
+
+                Intent in =new Intent(getActivity(),ShoppingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", (Serializable) list);
+                in.putExtras(bundle);
+                startActivity(in);
                Toast.makeText(getActivity(), "创建订单成功,请手动跳转全部订单页面", Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,7 +92,7 @@ public class ThreeFragment extends Fragment implements ShoppingContract.Shopping
     public void showData(FindShoppingBean shoppingBeans) {
 
         data = shoppingBeans.getResult();
-        final MyBussionAdapter adapter = new MyBussionAdapter(R.layout.goods_item, data);
+        adapter = new MyBussionAdapter(R.layout.goods_item, data);
         LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         recyItem.setLayoutManager(manager);
         recyItem.setAdapter(adapter);
@@ -101,6 +106,7 @@ public class ThreeFragment extends Fragment implements ShoppingContract.Shopping
                 for (int i = 0; i < data.size(); i++) {
                     boolean onGoodsChecked = data.get(i).getChecked();
                     result = result & onGoodsChecked;
+
                 }
                 cbQuanxuan.setChecked(result);
                 //adapter.notifyDataSetChanged();

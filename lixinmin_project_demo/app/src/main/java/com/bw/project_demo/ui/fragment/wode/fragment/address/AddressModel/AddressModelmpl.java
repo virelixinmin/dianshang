@@ -1,9 +1,13 @@
 package com.bw.project_demo.ui.fragment.wode.fragment.address.AddressModel;
 
+import android.app.Service;
+
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressBeans.AddressBean;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressConstance.AddressContance;
-import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressServiceApp.AddressServiceApp;
-import com.bw.project_demo.ui.fragment.wode.fragment.address.Constance.constan;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,21 +22,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddressModelmpl implements AddressContance.AddressModel {
 
-    private AddressServiceApp addressServiceApp;
+    private ServiceApp addressServiceApp;
 
     @Override
     public void responseModel(int userId, String sessionId, final CallBack callBack) {
-        Retrofit build = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(constan.urlString)
-                .build();
-        addressServiceApp = build.create(AddressServiceApp.class);
+
         HashMap<String,String> objectObjectHashMap = new HashMap<>();
         objectObjectHashMap.put("userId",userId+"");
         objectObjectHashMap.put("sessionId",sessionId);
-        Observable<AddressBean> addressResponseData = addressServiceApp.getAddressResponseData(objectObjectHashMap);
-        addressResponseData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getAddressResponseData(objectObjectHashMap)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<AddressBean>() {
                     @Override

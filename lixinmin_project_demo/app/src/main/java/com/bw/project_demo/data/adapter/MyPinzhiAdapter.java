@@ -16,11 +16,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+//品质生活的适配器
 public class MyPinzhiAdapter extends RecyclerView.Adapter<MyPinzhiAdapter.ViewHolder> {
     FragmentActivity context;
     List<ShopBeans.ResultBean.PzshBean.CommodityListBeanX> pinzhi;
     OnpinzhiImgClickListen onpinzhiImgClickListen;
+    //设置接口回调
     public interface OnpinzhiImgClickListen{
         public void OnClick(int commodityId);
     }
@@ -32,7 +33,7 @@ public class MyPinzhiAdapter extends RecyclerView.Adapter<MyPinzhiAdapter.ViewHo
         this.pinzhi=pinzhi;
 
     }
-
+    //优化的适配器viewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,7 +41,7 @@ public class MyPinzhiAdapter extends RecyclerView.Adapter<MyPinzhiAdapter.ViewHo
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
-
+    //给适配器控件赋值
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Glide.with(context).load(pinzhi.get(position).getMasterPic()).into(holder.img);

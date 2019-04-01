@@ -1,8 +1,11 @@
 package com.bw.project_demo.ui.fragment.wode.fragment.address.AddressUpdate.UpdateModel;
 
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressUpdate.UpdateAddressConstance.UpdateConstance;
-import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressUpdate.UpdateServiceApp.UpdateServiceApp;
-import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressUpdate.Updatebeans.Constance;
+
+
 
 import java.util.HashMap;
 
@@ -18,13 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UpdateModelImpl implements UpdateConstance.UpdateModel {
     @Override
     public void responseAddModel(HashMap<String, String> map2, HashMap<String, String> map, final AddressAddCallBack addressAddCallBack) {
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(Constance.UrlString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        UpdateServiceApp updateServiceApp = build.create(UpdateServiceApp.class);
-        Observable<ResponseBody> responseAdd = updateServiceApp.getResponseAdd(map2, map);
-        responseAdd.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getResponseAdd(map2,map)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
@@ -43,13 +42,9 @@ public class UpdateModelImpl implements UpdateConstance.UpdateModel {
 
     @Override
     public void responseModel(HashMap<String, String> map2, HashMap<String, String> map, final AddressCallBack addressCallBack) {
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(Constance.UrlString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        UpdateServiceApp updateServiceApp = build.create(UpdateServiceApp.class);
-        Observable<ResponseBody> responseUpDate = updateServiceApp.getResponseUpDate(map2, map);
-        responseUpDate.subscribeOn(Schedulers.io())
+       RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+               .getResponseUpDate(map2,map)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override

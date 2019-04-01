@@ -13,6 +13,8 @@ import com.bw.project_demo.ui.fragment.search.SearchPresenter.SearchPresenter;
 import com.bw.project_demo.ui.fragment.search.adapter.MySearchAdapter;
 import com.bw.project_demo.ui.fragment.search.searchContrant.SearchContrants;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,13 +51,19 @@ public class SearchActivity extends AppCompatActivity implements SearchContrants
             startActivity(in);
 
             finish();
-        }else{
-
+        }else if (result.size()>0){
+            EventBus.getDefault().postSticky(search_name);
             MySearchAdapter adapter = new MySearchAdapter(SearchActivity.this, result);
             GridLayoutManager manager = new GridLayoutManager(SearchActivity.this, 2);
             searchRcy.setLayoutManager(manager);
             searchRcy.setAdapter(adapter);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventBus.getDefault().postSticky(search_name);
     }
 }

@@ -1,7 +1,9 @@
 package com.bw.project_demo.ui.fragment.wode.fragment.mycircle.model;
 
 
-import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.ServiceApp.MyServiceApp;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.beans.circlebean;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.circleConstance.CircleConstance;
 
@@ -19,16 +21,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CircleModelImpl implements CircleConstance.CircleModel {
     @Override
     public void responseModel(String sessionId, int userId, final CallBack callBack) {
-        Retrofit build = new Retrofit.Builder().baseUrl(com.bw.project_demo.ui.fragment.wode.fragment.mycircle.constance.CircleConstance.urlString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        MyServiceApp myServiceApp = build.create(MyServiceApp.class);
+
         HashMap<String, String> map = new HashMap<>();
         map.put("userId",userId+"");
         map.put("sessionId",sessionId);
-        Observable<circlebean> responseCircleData = myServiceApp.getResponseCircleData(map, 1, 5);
-        responseCircleData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getResponseCircleData(map,1,10)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<circlebean>() {
                     @Override

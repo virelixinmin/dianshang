@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.All_ordersbean;
 import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.My_Alls_Adapter;
-import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.ServiceApp;
+import com.bw.project_demo.data.contractPath.ServiceApp;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,10 +51,6 @@ public class finished extends Fragment {
         SharedPreferences data = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         final int userId = data.getInt("userId", 5);
         final String sessionId = data.getString("sessionId", "15011445417");
-        Retrofit build = new Retrofit.Builder().baseUrl("http://mobile.bwstudent.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
         HashMap<String, String> map = new HashMap<>();
         map.put("userId", userId + "");
@@ -61,9 +59,10 @@ public class finished extends Fragment {
         map2.put("status", 9 + "");
         map2.put("page", 1 + "");
         map2.put("count", 5 + "");
-        ServiceApp serviceApp = build.create(ServiceApp.class);
-        Observable<All_ordersbean> getorders = serviceApp.getorders(map, map2);
-        getorders.subscribeOn(Schedulers.io())
+
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getorders(map,map2)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<All_ordersbean>() {
                     @Override
@@ -73,12 +72,7 @@ public class finished extends Fragment {
                         racyWan.setLayoutManager(new LinearLayoutManager(getActivity()));
                         racyWan.setAdapter(adapter);
 
-                        adapter.setOnAllCallBack(new My_Alls_Adapter.AllsCallBack() {
-                            @Override
-                            public void getData(String orderId) {
-                                String ord = orderId;
-                            }
-                        });
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override

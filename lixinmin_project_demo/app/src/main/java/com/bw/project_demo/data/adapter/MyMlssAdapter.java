@@ -19,11 +19,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+//首页魔力时尚的适配器
 public class MyMlssAdapter extends RecyclerView.Adapter<MyMlssAdapter.ViewHolder> {
     FragmentActivity context;
     List<ShopBeans.ResultBean.RxxpBean.CommodityListBean> rxxp;
     OnImgClickListen onImgClickListen;
+    //设置接口回调
     public interface OnImgClickListen{
         public void OnClick(int commodityId);
     }
@@ -35,7 +36,7 @@ public class MyMlssAdapter extends RecyclerView.Adapter<MyMlssAdapter.ViewHolder
         this.rxxp = rxxp;
 
     }
-
+    //设置viewHolder的优化
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +44,7 @@ public class MyMlssAdapter extends RecyclerView.Adapter<MyMlssAdapter.ViewHolder
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
-
+    //给适配器中的控件赋值
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         RoundedCorners roundedCorners = new RoundedCorners(20);
@@ -51,7 +52,7 @@ public class MyMlssAdapter extends RecyclerView.Adapter<MyMlssAdapter.ViewHolder
         Glide.with(context).load(rxxp.get(position).getMasterPic()).apply(override).into(holder.img);
        holder.tvPrice.setText("$"+rxxp.get(position).getPrice());
        holder.tvTitle.setText(rxxp.get(position).getCommodityName());
-
+       //回传到商品详情界面的id
        holder.img.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

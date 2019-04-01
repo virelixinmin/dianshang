@@ -1,5 +1,6 @@
 package com.bw.project_demo.data.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,6 +10,7 @@ import java.util.List;
  * 更改时间：2019/1/9  21:00
  * 版本号：1
  */
+//查询购物车的bean类
 public class FindShoppingBean {
 
 
@@ -46,7 +48,7 @@ public class FindShoppingBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * commodityId : 5
          * commodityName : 双头两用修容笔
@@ -62,6 +64,17 @@ public class FindShoppingBean {
         private int price;
         private boolean checked;
 
+        public ResultBean(int commodityId, String commodityName, int count, String pic, int price, boolean checked) {
+            this.commodityId = commodityId;
+            this.commodityName = commodityName;
+            this.count = count;
+            this.pic = pic;
+            this.price = price;
+            this.checked = checked;
+        }
+
+        public ResultBean() {
+        }
 
         public boolean getChecked() {
             return checked;
@@ -114,16 +127,14 @@ public class FindShoppingBean {
 
         @Override
         public String toString() {
-            return "{" +
-                    "commodityId"+":"+ commodityId +
-                    ", count"+":" + count +
+            return "ResultBean{" +
+                    "commodityId=" + commodityId +
+                    ", commodityName='" + commodityName + '\'' +
+                    ", count=" + count +
+                    ", pic='" + pic + '\'' +
+                    ", price=" + price +
+                    ", checked=" + checked +
                     '}';
         }
-
-        public ResultBean(int commodityId, int count) {
-            this.commodityId = commodityId;
-            this.count = count;
-        }
-
     }
 }

@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
-import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.ServiceApp.MyServiceApp;
-import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.constance.CircleConstance;
+
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
+import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.circleConstance.CircleConstance;
 import com.whyalwaysmea.circular.AnimUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -98,11 +101,6 @@ public class SendActivity extends AppCompatActivity {
     public void InterNet(List<Object> files) {
         String s = editContent.getText().toString();
 
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(CircleConstance.SendString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        MyServiceApp myServiceApp = build.create(MyServiceApp.class);
         HashMap<String, String> objectObjectHashMap = new HashMap<>();
         objectObjectHashMap.put("userId", userId + "");
         objectObjectHashMap.put("sessionId", sessionId);
@@ -117,8 +115,9 @@ public class SendActivity extends AppCompatActivity {
                 .build();
         MultipartBody build1 = builder.build();
         List<MultipartBody.Part> parts = build1.parts();
-        Observable<ResponseBody> responseData = myServiceApp.getResponseData(objectObjectHashMap,parts);
-        responseData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getResponseData(objectObjectHashMap,parts)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override

@@ -1,14 +1,16 @@
 package com.bw.project_demo.ui.fragment.xiangqing.Details;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,18 +18,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bw.project_demo.R;
 import com.bw.project_demo.data.beans.FindShoppingBean;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.di.Contract.ShoppingContract;
 import com.bw.project_demo.di.presenter.ShoppingPresenterImpl;
-import com.bw.project_demo.ui.fragment.gouwuche.ShoppingContent.ShoppingCon;
-import com.bw.project_demo.ui.fragment.gouwuche.widght.MyShoppingServiceApp;
+import com.bw.project_demo.ui.fragment.gouwuche.ShoppingActivity;
 import com.bw.project_demo.ui.fragment.xiangqing.Car;
 import com.bw.project_demo.ui.fragment.xiangqing.DetailsBeans.beans;
 import com.bw.project_demo.ui.fragment.xiangqing.DetailsContrant.DetailsContrants;
 import com.bw.project_demo.ui.fragment.xiangqing.Presenter.DetailsPresenterImpl;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.stx.xhb.xbanner.XBanner;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +83,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContran
     private List<Car> cars = new ArrayList<>();
     private String syncBody;
     private ShoppingPresenterImpl shoppingPresenter;
+    beans beans;
+    private com.bw.project_demo.ui.fragment.xiangqing.DetailsBeans.beans.ResultBean result1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,20 +134,20 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContran
 //                in.putExtra("id",1);
 //                startActivity(in);
                 // Toast.makeText(DetailsActivity.this, "添加成功,请去购物车查看", Toast.LENGTH_SHORT).show();
-                Retrofit build = new Retrofit.Builder()
-                        .baseUrl(ShoppingCon.ShoppingUrlString)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
-                MyShoppingServiceApp myShoppingServiceApp = build.create(MyShoppingServiceApp.class);
+
                 Map<String, String> map = new HashMap<>();
                 map.put("userId", userId + "");
                 map.put("sessionId", sessionId);
                 Map<String, String> map1 = new HashMap<>();
 
 
-                map1.put("data", syncBody);
-                Observable<ResponseBody> shoppingResponseData = myShoppingServiceApp.getShoppingResponseData(map, map1);
-                shoppingResponseData.subscribeOn(Schedulers.io())
+                cars.add(new Car(id,1));
+                Gson gson = new Gson();
+                String s = gson.toJson(cars);
+                map1.put("data", s);
+                RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getShoppingResponseData(map, map1)
+                .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<ResponseBody>() {
                             @Override
@@ -160,34 +166,20 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContran
         buyGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Retrofit build = new Retrofit.Builder()
-                        .baseUrl(ShoppingCon.ShoppingUrlString)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
-                MyShoppingServiceApp myShoppingServiceApp = build.create(MyShoppingServiceApp.class);
-                Map<String, String> map = new HashMap<>();
-                map.put("userId", userId + "");
-                map.put("sessionId", sessionId);
-                HashMap<String, String> map1 = new HashMap<>();
-                String path = "[{\"commodityId\":" + id + ",\"amount\":" + count + "}]";
-                map1.put("orderInfo", path);
-                map1.put("totalPrice", beans.getResult().getPrice() * count + "");
-                map1.put("addressId", String.valueOf(260));
-                Observable<ResponseBody> buyResponseData = myShoppingServiceApp.getBuyResponseData(map, map1);
-                buyResponseData.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<ResponseBody>() {
-                            @Override
-                            public void accept(ResponseBody responseBody) throws Exception {
-                                String s = responseBody.string().toString();
-                                Toast.makeText(DetailsActivity.this, s, Toast.LENGTH_SHORT).show();
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                Toast.makeText(DetailsActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                List<FindShoppingBean.ResultBean> list= new ArrayList<>();
+                FindShoppingBean.ResultBean resultBean = new FindShoppingBean.ResultBean();
+                resultBean.setCommodityName(result1.getCategoryName());
+                resultBean.setPic(result1.getPicture());
+                resultBean.setPrice(result1.getPrice());
+                resultBean.setCount(result1.getCommentNum());
+                list.add(new FindShoppingBean.ResultBean(result1.getCommodityId(),result1.getCommodityName(),1,result1.getPicture(),result1.getPrice(),true));
+                Log.e("gsk", "list:----------- "+list );
+                Intent in = new Intent(DetailsActivity.this,ShoppingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", (Serializable) list);
+                in.putExtras(bundle);
+                startActivity(in);
+//
             }
         });
     }
@@ -198,24 +190,20 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContran
         for (int i = 0; i < result.size(); i++) {
             Car car = new Car(result.get(i).getCommodityId(), result.get(i).getCount());
             cars.add(car);
-            Gson gson = new Gson();
-            syncBody = "[{\"commodityId\":" + id + ",\"count\":" + 5 + "},{\"commodityId\":" + result.get(i).getCommodityId() + ",\"count\":" + result.get(i).getCount() + "}]";
-            //syncBody = gson.toJson(cars);
-
         }
     }
 
-    beans beans;
+
 
     @Override
     public void showData(beans beans) {
         this.beans = beans;
+        result1 = beans.getResult();
         WebSettings settings = web.getSettings();
         settings.setJavaScriptEnabled(true);
         // web.setWebViewClient(new WebViewClient());
         //   web.loadUrl(beans.getResult().getDetails());
         String s="<script type=\"text/javascript\">" +
-
                 "var imgs=document.getElementsByTagName('img');" +
                 "for(var i = 0; i<imgs.length; i++){" +
                 "imgs[i].style.width='100%';" +
@@ -232,6 +220,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContran
             String l = split[i];
             list.add(l);
         }
+
         Uri parse = Uri.parse(list.get(3));
 //        goodsContentProductContentImg.setImageURI(parse);
         goodsContentPageViewPager.loadImage(new XBanner.XBannerAdapter() {

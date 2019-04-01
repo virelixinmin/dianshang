@@ -1,7 +1,6 @@
 package com.bw.project_demo.ui.fragment.search;
 
 import android.content.Intent;
-import android.database.Observable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,13 +12,7 @@ import android.widget.Toast;
 
 import com.bw.project_demo.R;
 import com.bw.project_demo.data.beans.Taobao;
-import com.bw.project_demo.ui.fragment.xiangqing.MyServiceApp;
-import com.google.gson.Gson;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
-
-import java.util.List;
+import com.bw.project_demo.data.contractPath.ServiceApp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +54,7 @@ public class SearchErrorActivity extends AppCompatActivity {
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .baseUrl("http://api.tkjidi.com/")
                         .build();
-                MyServiceApp myServiceApp = build.create(MyServiceApp.class);
+                ServiceApp myServiceApp = build.create(ServiceApp.class);
                 io.reactivex.Observable<Taobao> reponseTaobao = myServiceApp.getReponseTaobao(shop);
                 reponseTaobao.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

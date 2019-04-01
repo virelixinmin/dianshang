@@ -1,7 +1,7 @@
 package com.bw.project_demo.data.beans;
 
 import java.util.List;
-
+//轮播图bean类
 public class BannerBeans {
 
     /**

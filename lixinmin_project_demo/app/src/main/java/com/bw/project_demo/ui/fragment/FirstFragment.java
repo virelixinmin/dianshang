@@ -131,6 +131,7 @@ public class FirstFragment extends Fragment implements ContractAll.BannerView {
 //
 //           }
 //       });
+
         neirong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,18 +191,10 @@ public class FirstFragment extends Fragment implements ContractAll.BannerView {
 
         //魔力时尚
         mlss = shopBeans.getResult().getMlss().getCommodityList();
-
-
         //品质生活
         pzsh = shopBeans.getResult().getPzsh().getCommodityList();
-
-
         //热销新品
         rxx = shopBeans.getResult().getRxxp().getCommodityList();
-
-
-
-
         initRxxpData(rxx);
         //魔力时尚
         initFashion(mlss);
@@ -219,7 +212,6 @@ public class FirstFragment extends Fragment implements ContractAll.BannerView {
             public void OnClick(int commodityId) {
                 Intent in = new Intent(getActivity(), DetailsActivity.class);
                 in.putExtra("id", commodityId);
-
                 startActivity(in);
             }
         });

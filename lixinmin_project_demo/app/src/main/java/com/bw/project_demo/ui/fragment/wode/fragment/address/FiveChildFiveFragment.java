@@ -19,11 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.Adapter.MyAddressAdapter;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressBeans.AddressBean;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressConstance.AddressContance;
 import com.bw.project_demo.ui.fragment.wode.fragment.address.AddressPresenter.AddressPresenterImpl;
-import com.bw.project_demo.ui.fragment.wode.fragment.address.Constance.constan;
+
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.adapter.MyCircleAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -133,16 +136,13 @@ public class FiveChildFiveFragment extends Fragment implements AddressContance.A
                 tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Retrofit build = new Retrofit.Builder()
-                                .baseUrl(constan.urlString)
-                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                .build();
-                        Default_ServiceApp default_serviceApp = build.create(Default_ServiceApp.class);
+
                         HashMap<String, String> map = new HashMap<>();
                         map.put("userId",userId+"");
                         map.put("sessionId",sessionId);
-                        Observable<ResponseBody> defaultData = default_serviceApp.getDefaultData(map, result.get(position).getId());
-                        defaultData.subscribeOn(Schedulers.io())
+                        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                                .getDefaultData(map,result.get(position).getId())
+                                .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Consumer<ResponseBody>() {
                                     @Override

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.utils.TimeUtils;
 import com.bw.project_demo.ui.fragment.quanzi.Adapter.MyChildImageAdapter;
 import com.bw.project_demo.ui.fragment.wode.fragment.mycircle.beans.circlebean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,6 +40,9 @@ public class MyCircleAdapter extends BaseQuickAdapter<circlebean.ResultBean,Base
         helper.setText(R.id.my_circle_name,item.getNickName());
         Uri parse = Uri.parse(item.getHeadPic());
         SimpleDraweeView drwee = helper.getView(R.id.my_circle_icon_mine);
+        long createTime = item.getCreateTime();
+        String s = TimeUtils.longToDate(createTime);
+        helper.setText(R.id.my_circle_time,s);
         drwee.setImageURI(parse);
         helper.setText(R.id.my_circle_content,item.getContent());
         int whetherGreat = item.getGreatNum();

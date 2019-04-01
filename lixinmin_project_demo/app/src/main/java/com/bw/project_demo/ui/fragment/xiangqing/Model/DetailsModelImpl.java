@@ -4,10 +4,11 @@ import android.util.Log;
 
 import io.reactivex.Observable;
 
-import com.bw.project_demo.ui.fragment.quanzi.CircleContance.Contance;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.xiangqing.DetailsBeans.beans;
 import com.bw.project_demo.ui.fragment.xiangqing.DetailsContrant.DetailsContrants;
-import com.bw.project_demo.ui.fragment.xiangqing.MyServiceApp;
 
 import java.util.HashMap;
 
@@ -23,18 +24,14 @@ public class DetailsModelImpl implements DetailsContrants.DetailsModel {
     @Override
     public void responseModel(int userId, String sessionId, int id, final DetailsCallBack callBack) {
 
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(Contance.detailsString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("userId",userId+"");
         map.put("sessionId",sessionId);
 
-        MyServiceApp myServiceApp = build.create(MyServiceApp.class);
-        Observable<beans> responseData = myServiceApp.getResponseData(map,id);
-        responseData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getResponseData(map,id)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<beans>() {
                     @Override

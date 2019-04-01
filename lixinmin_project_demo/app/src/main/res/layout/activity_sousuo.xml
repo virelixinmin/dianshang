@@ -53,12 +53,59 @@
         android:layout_marginRight="24dp" />
 
     </RelativeLayout>
-    <com.zhy.view.flowlayout.TagFlowLayout
-        app:max_select="-1"
-        android:padding="@dimen/dp_20"
-        android:layout_width="fill_parent"
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tab">
-    </com.zhy.view.flowlayout.TagFlowLayout>
+        android:text="热门搜索"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:padding="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="饿了么"/>
+        <TextView
+            android:padding="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="美团外卖"/>
+        <TextView
+            android:padding="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="淘宝"/>
+        <TextView
+            android:padding="@dimen/dp_20"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="滴滴打车"/>
 
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:text="历史记录"
+        android:gravity="center"
+        android:background="#fff"
+        android:textColor="#f00"/>
+    <com.bw.project_demo.ui.fragment.FlowLayoutView
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:id="@+id/tab">
+    </com.bw.project_demo.ui.fragment.FlowLayoutView>
+    <Button
+        android:id="@+id/clearData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清空历史记录"
+        android:layout_gravity="center"/>
 </LinearLayout>

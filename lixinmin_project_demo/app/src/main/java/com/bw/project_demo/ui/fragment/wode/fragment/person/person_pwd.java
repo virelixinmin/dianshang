@@ -12,7 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
-import com.bw.project_demo.ui.fragment.wode.fragment.person.ServiceApp.PersonServiceApp;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
+
 
 import java.util.HashMap;
 
@@ -52,16 +55,13 @@ public class person_pwd extends AppCompatActivity {
         btnPwdSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Retrofit build = new Retrofit.Builder()
-                        .baseUrl(constanccc.urlPersonString)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
+
                 HashMap<String, String> map = new HashMap<>();
                 map.put("userId",userId+"");
                 map.put("sessionId",sessionId);
-                PersonServiceApp personServiceApp = build.create(PersonServiceApp.class);
-                Observable<ResponseBody> updatePwdData = personServiceApp.getUpdatePwdData(map, editNamePwd.getText().toString(), editPwd.getText().toString());
-                updatePwdData.subscribeOn(Schedulers.io())
+                RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getUpdatePwdData(map, editNamePwd.getText().toString(), editPwd.getText().toString())
+                .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<ResponseBody>() {
                             @Override

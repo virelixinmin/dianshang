@@ -4,39 +4,36 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 import com.bw.project_demo.ui.fragment.wode.fragment.person.PersonBean;
 import com.bw.project_demo.ui.fragment.wode.fragment.person.PersonConstance.PersonConstance;
 import com.bw.project_demo.ui.fragment.wode.fragment.person.PersonPresenter.PersonPresenterImpl;
-import com.bw.project_demo.ui.fragment.wode.fragment.person.ServiceApp.PersonServiceApp;
-import com.bw.project_demo.ui.fragment.wode.fragment.person.constanccc;
+
 import com.bw.project_demo.ui.fragment.wode.fragment.person.person_name;
 import com.bw.project_demo.ui.fragment.wode.fragment.person.person_pwd;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.Gson;
 
 
 import java.io.ByteArrayOutputStream;
@@ -229,17 +226,15 @@ public class FiveChildFragment extends Fragment implements PersonConstance.Perso
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId + "");
         map.put("sessionId", sessionId);
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(constanccc.urlPersonString)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
 
-        PersonServiceApp personServiceApp = build.create(PersonServiceApp.class);
+
+
         MultipartBody image = new MultipartBody.Builder().addFormDataPart("image", file.getName(), requestBody).build();
         List<MultipartBody.Part> parts = image.parts();
 
-        Observable<ResponseBody> imageData = personServiceApp.getImageData(map, part);
-        imageData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getImageData(map,part)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override

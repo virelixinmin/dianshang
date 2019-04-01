@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bw.project_demo.R;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,14 +48,9 @@ public class FiveChildThreeFragment extends Fragment {
         Map<String, String> map = new HashMap<>();
         map.put("userId", userId + "");
         map.put("sessionId", sessionId);
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl("http://mobile.bwstudent.com/")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        FootServiceApp footServiceApp = build.create(FootServiceApp.class);
-        Observable<FootBean> footResponseData = footServiceApp.getFootResponseData(map, 1, 20);
-        footResponseData.subscribeOn(Schedulers.io())
+        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class)
+                .getFootResponseData(map,1,20)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<FootBean>() {
                     @Override

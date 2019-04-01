@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.project_demo.R;
-import com.bw.project_demo.ui.fragment.dingdan.fragment.All_orders.ServiceApp;
+import com.bw.project_demo.data.contractPath.CheckPath;
+import com.bw.project_demo.data.contractPath.ServiceApp;
+import com.bw.project_demo.data.utils.RetrofitUtils;
 
 import java.util.HashMap;
 
@@ -25,7 +27,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -91,19 +92,11 @@ public class PayMentActivity extends AppCompatActivity {
                 moneyPay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Retrofit build1 = new Retrofit.Builder()
-                                .baseUrl("http://mobile.bwstudent.com/")
-                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-                        ServiceApp serviceApp1 = build1.create(ServiceApp.class);
                         HashMap<String, String> map = new HashMap<>();
                         map.put("userId", userId + "");
                         map.put("sessionId", sessionId);
-
-
-                        Observable<paybean> payMent = serviceApp1.getPayMent(map, ord,1);
-                        payMent.subscribeOn(Schedulers.io())
+                        RetrofitUtils.getRetrofitUtils().getApiService(CheckPath.allString,ServiceApp.class).getPayMent(map, ord,1)
+                                .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Consumer<paybean>() {
                                     @Override

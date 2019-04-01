@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@drawable/btn"
+    android:layout_marginBottom="@dimen/dp_20"
     android:padding="@dimen/dp_10"
     android:layout_height="wrap_content">
 
@@ -80,24 +81,17 @@
     </LinearLayout>
 
     <Button
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_5"
         android:id="@+id/order_PendingPayment_cancel"
         android:background="#f2f2f2"
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_26"
-        android:layout_below="@id/order_PendingPayment_lin"
+        android:layout_below="@+id/order_PendingPayment_lin"
         android:text="取消订单"
 
         android:textColor="#666666"
         android:textSize="@dimen/sp_14" />
-    <Button
-        android:layout_alignParentRight="true"
-        android:id="@+id/order_PendingPayment_payment"
-        android:layout_alignTop="@id/order_PendingPayment_cancel"
-        android:background="#ff5757"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_26"
-        android:text="去支付"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/sp_14" />
+
 </RelativeLayout>
